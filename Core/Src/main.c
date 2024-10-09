@@ -60,7 +60,7 @@
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
-
+__weak void project_init() {}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -107,7 +107,7 @@ int main(void)
   MX_IWDG_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  project_init();
   /* USER CODE END 2 */
 
   /* Init scheduler */

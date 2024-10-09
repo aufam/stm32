@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "iwdg.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,6 +46,10 @@ typedef StaticTask_t osStaticThreadDef_t;
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
+char blinkSymbols[16] = "1010";
+int blinkIsRunning = 1;
+uint32_t blinkDelay = 150;
+__weak void panic(const char* msg) { UNUSED(msg); }
 
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
@@ -90,6 +94,7 @@ void vApplicationIdleHook( void )
    important that vApplicationIdleHook() is permitted to return to its calling
    function, because it is the responsibility of the idle task to clean up
    memory allocated by the kernel to any task that has since been deleted. */
+  HAL_IWDG_Refresh(&hiwdg);
 }
 /* USER CODE END 2 */
 
@@ -110,6 +115,15 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
    /* Run time stack overflow checking is performed if
    configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2. This hook function is
    called if a stack overflow is detected. */
+  UNUSED(xTask);
+  char msg[64] = "Stack overflow on thread ";
+  for (int i = 26; i < 63; ++i) {
+    char ch = pcTaskName[i-24];
+    msg[i] = ch;
+
+    if (ch == '\0') break;
+  }
+  panic(msg);
 }
 /* USER CODE END 4 */
 
@@ -126,6 +140,7 @@ void vApplicationMallocFailedHook(void)
    FreeRTOSConfig.h, and the xPortGetFreeHeapSize() API function can be used
    to query the size of free heap space that remains (although it does not
    provide information on how the remaining heap might be fragmented). */
+  panic("Fail to allocate dynamic memory");
 }
 /* USER CODE END 5 */
 
@@ -187,11 +202,21 @@ void StartDefaultTask(void *argument)
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN StartDefaultTask */
+  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
   /* Infinite loop */
-  for(;;)
+  while (blinkIsRunning)
   {
-    osDelay(1);
+      for (size_t i = 0; i < sizeof(blinkSymbols); i++) {
+          if (blinkSymbols[i] == '\0') break;
+          switch (blinkSymbols[i]) {
+              case '1': HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET); osDelay(blinkDelay); break;
+              case '0': HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET); osDelay(blinkDelay); break;
+              default: break;
+          }
+      }
+      osDelay(500);
   }
+  osThreadExit();
   /* USER CODE END StartDefaultTask */
 }
 
