@@ -1,0 +1,10 @@
+.*
+!.gitignore
+!.gitmodules
+/*[Bb]uild*
+/*[Rr]elease*
+/*[Dd]ebug*
+/*[Bb]ackup*
+
+CMakeLists_template.txt
+compile_commands.json
