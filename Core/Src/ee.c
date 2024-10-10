@@ -10,7 +10,7 @@ uint32_t ee_write(const uint8_t* data, uint32_t len, uint32_t address) {
     HAL_FLASH_Unlock();
 
 	/* Unlock the Flash to enable the flash control register access *************/
-	::memset(&EraseInitStruct,0,sizeof(EraseInitStruct));
+	memset(&EraseInitStruct,0,sizeof(EraseInitStruct));
 	HAL_FLASH_Unlock();
 	__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP    | FLASH_FLAG_OPERR  | FLASH_FLAG_WRPERR |
 						   FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR );
@@ -41,7 +41,7 @@ uint32_t ee_write(const uint8_t* data, uint32_t len, uint32_t address) {
 	__HAL_FLASH_DATA_CACHE_ENABLE();
 
     for (size_t i = 0; i < len; ++i, ++address) {
-        auto res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, address, data[i]);
+        uint32_t res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, address, data[i]);
         if (res != HAL_OK) {
             HAL_FLASH_Lock();
             return res;
