@@ -33,11 +33,6 @@ target_include_directories(stm32 PUBLIC
     USB_DEVICE/Target 
 )
 
-# enable assembler files preprocessing
-target_compile_options(stm32 PUBLIC
-    $<$<COMPILE_LANGUAGE:ASM>:-x$<SEMICOLON>assembler-with-cpp>
-)
-
 # optimization flags
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
     message(STATUS "Maximum optimization for speed")
