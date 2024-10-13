@@ -19,6 +19,7 @@ struct boot_vectable_ {
     void (*Reset_Handler)(void);
 };
 
+#define TIM_TICK    TIM11
 #define BOOTVTAB	((volatile struct boot_vectable_ *)BOOT_ADDR)
 
 void dfu_bootloader(void) {
