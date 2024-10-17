@@ -56,8 +56,7 @@ target_compile_options(stm32 PRIVATE
     -Wundef
     -Wno-double-promotion
     $<$<COMPILE_LANGUAGE:C>:-Wno-unused-parameter>
-    $<$<COMPILE_LANGUAGE:CXX>:-Wno-literal-suffix>
-    $<$<COMPILE_LANGUAGE:CXX>:-Wno-attributes>
+    $<$<COMPILE_LANGUAGE:C>:-Wno-strict-aliasing>
 )
 
 # link options
