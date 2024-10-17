@@ -61,7 +61,7 @@ target_compile_options(stm32 PRIVATE
 )
 
 # link options
-target_link_options(stm32
+target_link_options(stm32 PUBLIC
     -specs=nano.specs
     -Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map,--script=${LINKER_SCRIPT}
 )
