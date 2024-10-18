@@ -20,14 +20,17 @@ else ()
     message(FATAL_ERROR "You must define F103_USE_USB or F103_USE_CAN")
 endif()
 
-target_compile_definitions(stm32 INTERFACE 
-	USE_HAL_DRIVER 
+target_compile_definitions(stm32 INTERFACE
+	USE_HAL_DRIVER
 	STM32F103xB
 )
 
 target_compile_options(stm32 INTERFACE
     -mcpu=cortex-m3
     -mfloat-abi=soft
+    -ffunction-sections
+    -fdata-sections
+    -fno-common
     $<$<COMPILE_LANGUAGE:C>:-Wno-strict-aliasing>
     $<$<COMPILE_LANGUAGE:C>:-Wno-unused-parameter>
 )
@@ -57,10 +60,10 @@ target_include_directories(stm32 INTERFACE
 )
 
 file(GLOB_RECURSE SOURCES
-	Core/*.*
+    Core/*.*
     Middlewares/ST/*.*
     Middlewares/Third_Party/FreeRTOS/*.*
-	Drivers/*.*
+    Drivers/*.*
     USB_DEVICE/*.*
 )
 
