@@ -29,6 +29,7 @@ target_compile_options(stm32 INTERFACE
     -mcpu=cortex-m3
     -mfloat-abi=soft
     $<$<COMPILE_LANGUAGE:C>:-Wno-strict-aliasing>
+    $<$<COMPILE_LANGUAGE:C>:-Wno-unused-parameter>
 )
 
 set(LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/STM32F103C8TX_FLASH.ld)
