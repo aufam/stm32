@@ -46,9 +46,9 @@ typedef StaticTask_t osStaticThreadDef_t;
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-char blinkSymbols[16] = "1010";
-int blinkIsRunning = 1;
-uint32_t blinkDelay = 150;
+char blinky_symbols[16] = "1010";
+int blinky_is_running = 1;
+uint32_t blinky_delay = 150;
 __weak void panic(const char* msg) { UNUSED(msg); }
 
 /* USER CODE END Variables */
@@ -198,13 +198,13 @@ void StartDefaultTask(void *argument)
   /* USER CODE BEGIN StartDefaultTask */
   HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
   /* Infinite loop */
-  while (blinkIsRunning)
+  while (blinky_is_running)
   {
-    for (size_t i = 0; i < sizeof(blinkSymbols); i++) {
-      if (blinkSymbols[i] == '\0') break;
-      switch (blinkSymbols[i]) {
-        case '1': HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET); osDelay(blinkDelay); break;
-        case '0': HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET); osDelay(blinkDelay); break;
+    for (size_t i = 0; i < sizeof(blinky_symbols); i++) {
+      if (blinky_symbols[i] == '\0') break;
+      switch (blinky_symbols[i]) {
+        case '1': HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET); osDelay(blinky_delay); break;
+        case '0': HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET); osDelay(blinky_delay); break;
         default: break;
       }
     }
