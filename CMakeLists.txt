@@ -28,6 +28,7 @@ target_compile_definitions(stm32 INTERFACE
 target_compile_options(stm32 INTERFACE
     -mcpu=cortex-m3
     -mfloat-abi=soft
+    -mthumb
     -ffunction-sections
     -fdata-sections
     -fno-common
@@ -40,6 +41,7 @@ set(MAP ${PROJECT_BINARY_DIR}/stm32.map)
 
 target_link_options(stm32 INTERFACE
     -mcpu=cortex-m3
+    -mthumb
     -specs=nano.specs
     -Wl,-gc-sections,--print-memory-usage,-Map=${MAP},--script=${LINKER_SCRIPT}
 )

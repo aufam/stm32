@@ -16,6 +16,9 @@ enable_language(C CXX ASM)
 
 add_compile_options(
     $<$<COMPILE_LANGUAGE:ASM>:-x$<SEMICOLON>assembler-with-cpp>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>
+    $<$<COMPILE_LANGUAGE:CXX>:-fpermissive>
 )
 
 function(stm32_toolchain_post_build name)
