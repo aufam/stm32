@@ -1,4 +1,5 @@
 #include "stm32f4xx_hal.h"
+#include <string.h>
 
 uint32_t ee_write(const uint8_t* data, uint32_t len, uint32_t address) {
 	if (address < 0x08060000) {
